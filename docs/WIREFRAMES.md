@@ -21,9 +21,9 @@ Esta tela apresentará uma barra (AppBar) no topo, em azul, contendo o nome da p
 
 Abaixo, em destaque, haverá o texto que informa ao usuário que se tratam de configurações para a parede de blocos e, logo a seguir, os componentes que permitem a interação do usuário.
 
-Primeiro, haverá um componente para o usuário selecionar o padrão de cores da parede de blocos, contendo uma lista de opções disponíveis.
+Primeiro, haverá um componente do tipo dropdown (menu suspenso) para o usuário selecionar o padrão de cores da parede de blocos, contendo uma lista de opções disponíveis.
 
-Além desse, haverá a opção de selecionar o tamanho dos blocos, dispostos horizontalmente, um botão por opção, com coloração de destaque para o selecionado.
+Além desse, haverá a opção de selecionar o tamanho dos blocos, apresentada como um grupo de botões (Pequeno / Médio / Grande) dispostos horizontalmente, com destaque visual (cor azul) para a opção selecionada.
 
 Por fim, há um botão de voltar para a tela inicial.
 
