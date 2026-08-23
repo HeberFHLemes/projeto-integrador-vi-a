@@ -21,9 +21,7 @@ como o VS Code com a extensão do Flutter.
 
 O arquivo APK será gerado executando, em linha de comando, `flutter build apk`.
 
-> Esse comando gera o arquivo em modo `release`, mas é possível adicionar a flag `--split-per-abi` para gerar diferentes arquivos APKs 
-separados por arquitetura, reduzindo o tamanho do arquivo entregue (o dispositivo instala apenas o APK correspondente à sua própria 
-arquitetura).
+> Esse comando gera o arquivo em modo `release`, mas é possível adicionar a flag `--split-per-abi` para gerar diferentes arquivos APKs separados por arquitetura, reduzindo o tamanho do arquivo entregue (o dispositivo instala apenas o APK correspondente à sua própria arquitetura).
 
 > Como, por ora, não pretendemos disponibilizar o aplicativo em lojas, não faremos a assinatura dos arquivos gerados.
 
