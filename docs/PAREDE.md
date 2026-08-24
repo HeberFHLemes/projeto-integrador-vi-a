@@ -1,5 +1,7 @@
 # Métodos de construção da parede de blocos
 
+Quanto aos métodos de construção da parede de blocos, primeiro explicaremos como vamos calcular as medidas utilizadas, já que variam de acordo com o tamanho dos blocos selecionado pelo usuário, para depois explicar como iremos gerar o "_layout_" da parede.
+
 ## Cálculo das medidas
 
 Para a construção da parede de blocos na tela do usuário, iremos primeiro identificar qual é o tamanho dos blocos selecionado (pelo usuário ou o padrão), sendo as opções: "Pequeno", "Médio" e "Grande", definidas em um `enum`.
