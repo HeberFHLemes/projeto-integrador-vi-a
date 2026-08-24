@@ -66,7 +66,6 @@ Como citado anteroirmente, o nível 1 apresentará a parede de blocos completa. 
 ![Tela ao perder o nível](wireframes/niveis/tela_nivel_3_perdido.png)
 
 ### Nível 4
-Para visualizar melhor que iremos utilizar de aleatoriedade, porém criando uma figura simétrica.
 
 ![Tela Nível 4](wireframes/niveis/tela_nivel_4.png)
 
