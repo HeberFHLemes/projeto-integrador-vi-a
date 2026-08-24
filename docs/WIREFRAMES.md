@@ -1,6 +1,7 @@
 # Wireframes em alta definição das telas
 
-Foram elaborados wireframes em alta definição das telas do aplicativo com Figma. Abaixo estão documentadas algumas decisões e explicações acerca desta prototipagem das telas.
+Foram elaborados wireframes em alta definição das telas do aplicativo com a ferramenta Figma.
+Eles estão documentados abaixo, junto com algumas explicações acerca da prototipagem.
 
 ## Tela inicial
 A tela inicial apresentará um fundo branco, com o título do aplicativo em destaque no topo ("Breakout") e três botões, sendo o primeiro o que direciona para um novo jogo (nível 1).
@@ -39,5 +40,36 @@ Por fim, também haverá o botão de voltar para a tela inicial.
 
 ![Tela Créditos](wireframes/tela_creditos.png)
 
+---
+
 ## Telas de jogo
-> ...
+
+Para o jogo em si, desenvolvemos alguns _wireframes_ que representam os diferentes níveis (e algumas situações) de jogo. 
+
+Quanto ao primeiro nível, a parede de blocos sempre será completa.
+
+Já para os outros níveis, como citado na documentação dos métodos de construção da parede de blocos, utilizaremos de aleatoriedade, o que faz com que dificilmente um _wireframe_ represente o nível específico em questão. Decidimos então, que no lugar de apenas apresentar um por nível para as diferenças da parede de blocos, demontraremos diferentes tamanhos de blocos e padrões de cores, além de situações como quando o usuário "perder" ou avançar de nível.
+
+### Nível 1, com padrão de cores Clássico Claro e tamanho dos blocos médio
+Como citado anteroirmente, o nível 1 apresentará a parede de blocos completa. Neste wireframe utilizamos o padrão de cores clássico para representar os níveis, podendo, na hora da implementação, adicionar mais padrões de cores.
+
+![Tela do nível 1](wireframes/niveis/tela_nivel_1.png)
+
+### Nível 2 ao avançar de nível
+
+![Tela ao avançar nível](wireframes/niveis/tela_nivel_2.png)
+
+### Nível 3, com padrão de cores Colorido Claro e tamanho dos blocos grande
+![Tela Nível 3](wireframes/niveis/tela_nivel_3.png)
+
+### Nível 3, ao perder o nível
+![Tela ao perder o nível](wireframes/niveis/tela_nivel_3_perdido.png)
+
+### Nível 4
+Para visualizar melhor que iremos utilizar de aleatoriedade, porém criando uma figura simétrica.
+
+![Tela Nível 4](wireframes/niveis/tela_nivel_4.png)
+
+### Nível 5, no padrão Colorido Escuro e tamanho dos blocos pequeno
+
+![Tela Nível 5](wireframes/niveis/tela_nivel_5.png)
