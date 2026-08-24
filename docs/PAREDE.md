@@ -70,3 +70,81 @@ verticalGutter = horizontalGutter * 0.75;
 ---
 
 ## Construção da parede
+
+Obtendo as medidas necessárias, incluindo o número de colunas por linha (isto é, espaços onde haverão blocos ou espaços do tamanho de blocos), construiremos a parede de blocos do nível com base nesse número de linhas (por enquanto, sempre 5) e colunas.
+
+Para essa construção, iremos gerar a metade inicial das colunas de cada linha de forma aleatória, e então espelhar na metade final da linha, criando um aspecto simétrico para a parede de blocos. Caso haja um número ímpar de colunas, construímos as colunas do meio de forma independente, também aleatoriamente. Isto se o nível em que o usuário se encontra não for o primeiro, pois este possuirá sempre a parede completa.
+
+Esse _layout_ será representado por uma matriz de booleanos. Em Dart, representada por `List<List<bool>>`.
+
+Com base nesse _layout_ construído, iremos instanciar os objetos que representam os blocos (`Brick`), já com suas propriedades definidas e calculadas, incluindo a posição em que estará (com base na linha e coluna que representa e em suas medidas), e adicionar no conjunto de blocos que representam a parede, em Dart, representado por `List<Brick>`.
+
+```dart
+// Na classe responsável por gerar a parede de blocos:
+
+/// Método estático responsável por construir a parede de blocos 
+/// (instancia os objetos que representam os blocos),
+/// delegando o cálculo das medidas dos blocos para a classe citada anteriormente
+/// e a geração do layout ao método estático citado a seguir.
+static List<Brick> generateLevel({
+  required int level,
+  required double maxWidth,
+  required BrickSize brickSize,
+  required BrickColorPattern colorPattern,
+}) {
+  // ...
+}
+
+/// Método estático que gera o layout da parede, com aleatoriedade.
+static List<List<bool>> createRandomizedMap(
+  int rows,
+  int cols,
+  math.Random random,
+) {
+  final map = <List<bool>>[];
+
+  final halfCols = cols ~/ 2;
+
+  // se tiver número ímpar de colunas
+  final hasCenter = cols % 2 != 0;
+
+  for (int r = 0; r < rows; r++) {
+    final row = List.filled(cols, false);
+
+    // Quantidade de pares que serão preenchidos
+    final numPairs = random.nextInt(halfCols + 1);
+
+    int placed = 0;
+
+    while (placed < numPairs) {
+      final idx = random.nextInt(halfCols);
+
+      if (row[idx]) continue;
+
+      // Lado esquerdo
+      row[idx] = true;
+
+      // Lado direito (espelhado)
+      row[cols - 1 - idx] = true;
+
+      placed++;
+    }
+
+    // Se houver uma coluna central, ela é "independente".
+    if (hasCenter) {
+      final center = halfCols;
+
+      row[center] = random.nextBool();
+    }
+
+    map.add(row);
+  }
+  return map;
+}
+
+```
+
+Então, com o conjunto dos blocos (`List<Brick>`), poderemos armazenar isto em uma variável, na classe responsável pelo jogo em si, para adicionar à tela do usuário e permitir reiniciar o mesmo nível quando necessário.
+
+As cores de cada bloco serão definidas com base no padrão de cores selecionado, sendo atribuída aleatoriamente uma das cores deste padrão, armazenadas em uma constante do tipo `Map<BrickColorPattern, List<Color>>`.
+
