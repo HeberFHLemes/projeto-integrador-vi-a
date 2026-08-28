@@ -1,5 +1,5 @@
 name: breakout
-description: "A new Flutter project."
+description: "Desenvolvimento do jogo Breakout para dispositivos móveis com Flutter."
 publish_to: 'none'
 version: 0.1.0+1
 
