@@ -9,7 +9,7 @@ recursos que facilitam sua implementação, como o controle do loop do jogo e a 
 
 Além destas duas tecnologias principais, também utilizaremos algumas bibliotecas, sendo as principais:
 `flutter_animate` para animações e efeitos, `google_fonts` para as fontes utilizadas
-e `flutter_audio` para manipular o áudio da aplicação.
+e `flame_audio` para manipular o áudio da aplicação.
 
 ## Ambiente de desenvolvimento
 
