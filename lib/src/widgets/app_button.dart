@@ -25,7 +25,7 @@ class AppButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: backgroundColor, // cor passada como parâmetro
         shape: ContinuousRectangleBorder(), // retangular
-        fixedSize: Size(180, 40), // tamanho fixo, pelo menos por enquanto
+        fixedSize: Size(200, 40), // tamanho fixo, pelo menos por enquanto
       ),
       // texto do botão com sua cor, ambos recebidos como paramêtros
       child: Text(
