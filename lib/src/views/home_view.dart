@@ -11,17 +11,37 @@ class HomeView extends StatelessWidget {
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: Center(
-              child: Column(
-                children: [
-                  const Text('Breakout', style: TextStyle(fontSize: 24)),
+            child: Column(
+              children: [
+                // Título/header, em destaque
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      'Breakout',
+                      style: TextStyle(
+                        fontSize: 32,
+                      ),
+                    ),
+                  ),
+                ),
 
-                  // TODO: Botões para redirecionar para as respectivas telas...
-                  // Novo Jogo
-                  // Opções
-                  // Créditos
-                ],
-              ),
+                // TODO: Botões para redirecionar para as respectivas telas...
+                // Novo Jogo
+                // Opções
+                // Créditos
+                Expanded(
+                  child: Center(
+                    child: Column(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {},
+                          child: Text('Testando layout')
+                        )
+                      ]
+                    )
+                  )
+                ),
+              ],
             ),
           ),
         ),
