@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 class AppTheme {
   static const primaryColor = Color(0xff004fe0);
   static const secondaryColor = Color(0xff404042);
-  static const tertiaryColor = Colors.white;
+  static const tertiaryColor = Color(0xffd9d9d9);
 
   /// Definiçõa do tema do aplicativo, retornando ThemeData.
   static ThemeData get theme {
@@ -18,7 +18,7 @@ class AppTheme {
       colorScheme: ColorScheme.light(
         primary: primaryColor,
         secondary: secondaryColor,
-        tertiary: Colors.white,
+        tertiary: tertiaryColor,
       ),
     );
   }
