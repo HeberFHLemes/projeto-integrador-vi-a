@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/app_button.dart';
+
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
@@ -32,11 +34,32 @@ class HomeView extends StatelessWidget {
                 Expanded(
                   child: Center(
                     child: Column(
+                      spacing: 16.0,
                       children: [
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: Text('Testando layout')
-                        )
+                        AppButton(
+                          text: 'Novo Jogo',
+                          backgroundColor: Theme.of(context).colorScheme.primary,
+                          textColor: Colors.white,
+                          onPressed: () {
+                            // TODO: redirecionar para tela de jogo (nível 1)
+                          }
+                        ),
+                        AppButton(
+                          text: 'Opções',
+                          backgroundColor: Theme.of(context).colorScheme.secondary,
+                          textColor: Colors.white,
+                          onPressed: () {
+                            // TODO: redirecionar para tela Opções
+                          }
+                        ),
+                        AppButton(
+                            text: 'Créditos',
+                            textColor: Theme.of(context).colorScheme.secondary,
+                            backgroundColor: Theme.of(context).colorScheme.tertiary,
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/credits');
+                            }
+                        ),
                       ]
                     )
                   )
