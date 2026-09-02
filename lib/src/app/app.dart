@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'app_theme.dart';
 import 'routes.dart';
-import '../views/home_view.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -13,7 +12,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.theme,
       routes: routes,
-      home: const HomeView(), // tela inicial
+      initialRoute: '/',
     );
   }
 }

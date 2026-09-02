@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+import '../views/views.dart';
 
-/// Registro das rotas do aplicativo (que não são a "home"/inicial).
-const Map<String, Widget Function(BuildContext)> routes = {
-  // TODO: registrar as rotas e suas respectivas "views" (telas).
-  // '/game' = const GameView(),
-  // '/options' = const OptionsView(),
-  // '/credits' = const CreditsView(),
-  // ...
+/// Registro das rotas do aplicativo
+final routes = {
+  '/': (context) => HomeView(),
+  '/credits': (context) => CreditsView(),
+  // TODO: definir rotas para as futuras telas
+  // '/game': ...,
+  // '/options': ...,
 };
