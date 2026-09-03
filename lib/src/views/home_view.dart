@@ -27,10 +27,6 @@ class HomeView extends StatelessWidget {
                   ),
                 ),
 
-                // TODO: Botões para redirecionar para as respectivas telas...
-                // Novo Jogo
-                // Opções
-                // Créditos
                 Expanded(
                   child: Center(
                     child: Column(

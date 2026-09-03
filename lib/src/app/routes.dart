@@ -4,7 +4,5 @@ import '../views/views.dart';
 final routes = {
   '/': (context) => HomeView(),
   '/credits': (context) => CreditsView(),
-  // TODO: definir rotas para as futuras telas
-  // '/game': ...,
-  // '/options': ...,
+  '/options': (context) => OptionsView(),
 };

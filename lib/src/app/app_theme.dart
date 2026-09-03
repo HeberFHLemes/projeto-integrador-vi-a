@@ -7,7 +7,7 @@ class AppTheme {
   static const secondaryColor = Color(0xff404042);
   static const tertiaryColor = Color(0xffd9d9d9);
 
-  /// Definiçõa do tema do aplicativo, retornando ThemeData.
+  /// Definição do tema do aplicativo, retornando ThemeData.
   static ThemeData get theme {
     return ThemeData(
       // Fonte "Press Start 2P", do Google Fonts.
