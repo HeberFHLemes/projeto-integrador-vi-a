@@ -19,20 +19,17 @@ class CreditsView extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.primary,
         automaticallyImplyLeading: false, // sem o ícone padrão
       ),
-      body: Container(
-        decoration: const BoxDecoration(color: Colors.white),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                // TODO: título/header em destaque "Integrantes"
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              // TODO: título/header em destaque "Integrantes"
 
-                // TODO: Listagem dos nomes dos integrantes
+              // TODO: Listagem dos nomes dos integrantes
 
-                // TODO: Botão "Voltar" (AppButton)
-              ],
-            ),
+              // TODO: Botão "Voltar" (AppButton)
+            ],
           ),
         ),
       ),
