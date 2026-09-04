@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:breakout/src/game/components/play_area.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
@@ -15,6 +18,20 @@ class Breakout extends FlameGame
       height: gameHeight,
     ),
   );
+
+  double get width => size.x;
+  double get height => size.y;
+
+  @override
+  FutureOr<void> onLoad() async {
+    super.onLoad();
+
+    camera.viewfinder.anchor = Anchor.topLeft;
+
+    world.add(PlayArea());
+
+    // TODO: definir estado inicial
+  }
 
   // TODO:
   // - Gerenciar os estados
