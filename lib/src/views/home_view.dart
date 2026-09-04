@@ -37,6 +37,7 @@ class HomeView extends StatelessWidget {
                         onPressed: () {
                           // TODO: redirecionar para tela de jogo (nível 1) e
                           // passar configuração selecionada da parede de blocos
+                          Navigator.pushNamed(context,'/game');
                         }
                       ),
                       AppButton(

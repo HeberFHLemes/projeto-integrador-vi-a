@@ -5,4 +5,5 @@ final routes = {
   '/': (context) => HomeView(),
   '/credits': (context) => CreditsView(),
   '/options': (context) => OptionsView(),
+  '/game': (context) => GameView(),
 };
