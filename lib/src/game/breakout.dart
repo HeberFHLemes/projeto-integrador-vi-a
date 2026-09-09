@@ -14,6 +14,14 @@ import 'components/play_area.dart';
 import 'constants.dart';
 import 'level_maker.dart';
 
+/// Estados do jogo
+enum PlayState {
+  welcome, // antes de "iniciar" o jogo
+  playing, // enquanto joga
+  gameOver, // modal "Você perdeu!" com as opções de reiniciar nível ou avançar
+  won; // modal informando que usuário avançará p/ o próximo nível
+}
+
 /// Classe responsável pelo gerenciamento do jogo e seus componentes,
 /// estendendo de FlameGame.
 class Breakout extends FlameGame
@@ -46,6 +54,26 @@ class Breakout extends FlameGame
   /// Parede de blocos que representa o nível atual
   late List<Brick> level;
 
+  // Gerenciamento dos estados do jogo
+  late PlayState _playState;
+
+  PlayState get playState => _playState;
+
+  set playState(PlayState playState) {
+    _playState = playState;
+    switch (playState) {
+      // TODO: gerenciar estados de welcome, gameOver e won apropriadamente...
+      case PlayState.welcome:
+      case PlayState.gameOver:
+      case PlayState.won:
+        overlays.add(playState.name);
+      case PlayState.playing:
+        overlays.remove(PlayState.welcome.name);
+        overlays.remove(PlayState.gameOver.name);
+        overlays.remove(PlayState.won.name);
+    }
+  }
+
   @override
   FutureOr<void> onLoad() async {
     super.onLoad();
@@ -54,7 +82,7 @@ class Breakout extends FlameGame
 
     world.add(PlayArea());
 
-    // TODO: definir estado inicial
+    playState = PlayState.welcome;
   }
 
   // TODO:
@@ -65,9 +93,11 @@ class Breakout extends FlameGame
   // - Gerenciar os níveis
 
   void startGame() {
+    if (playState == PlayState.playing) return;
 
     world.removeAll(world.children.query<Brick>());
 
+    playState = PlayState.playing;
     score.value = 0;
 
     level = LevelMaker.generateLevel(
