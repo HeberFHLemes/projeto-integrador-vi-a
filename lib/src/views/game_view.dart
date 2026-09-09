@@ -27,10 +27,12 @@ class _GameViewState extends State<GameView> {
     return Scaffold(
       appBar: CustomAppBar(title: 'NÍVEL ${game.currentLevel}'),
       body: Container(
-        decoration: const BoxDecoration(color: Colors.white),
+        decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.tertiary,
+        ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.only(bottom: 16),
             child: Center(
               child: Column(
                 children: [

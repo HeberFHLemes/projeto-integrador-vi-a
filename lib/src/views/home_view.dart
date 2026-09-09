@@ -35,8 +35,7 @@ class HomeView extends StatelessWidget {
                         backgroundColor: Theme.of(context).colorScheme.primary,
                         textColor: Colors.white,
                         onPressed: () {
-                          // TODO: redirecionar para tela de jogo (nível 1) e
-                          // passar configuração selecionada da parede de blocos
+                          // TODO: passar configuração da parede de blocos
                           Navigator.pushNamed(context,'/game');
                         }
                       ),
@@ -45,8 +44,7 @@ class HomeView extends StatelessWidget {
                         backgroundColor: Theme.of(context).colorScheme.secondary,
                         textColor: Colors.white,
                         onPressed: () {
-                          // TODO: passar parâmetros relativos às
-                          //  opções selecionadas (e repassar ao jogo depois).
+                          // TODO: passar configuração da parede de blocos
                           Navigator.pushNamed(context, '/options');
                         }
                       ),
