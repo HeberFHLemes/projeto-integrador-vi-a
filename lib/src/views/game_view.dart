@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../game/breakout.dart';
 import '../game/constants.dart';
 import '../widgets/custom_app_bar.dart';
+import '../widgets/overlay_screen.dart';
 
 class GameView extends StatefulWidget {
 
@@ -36,7 +37,6 @@ class _GameViewState extends State<GameView> {
             child: Center(
               child: Column(
                 children: [
-                  // TODO: Score/pontuação do usuário
                   Expanded(
                     child: FittedBox(
                       child: SizedBox(
@@ -44,8 +44,29 @@ class _GameViewState extends State<GameView> {
                         height: gameHeight,
                         child: GameWidget(
                           game: game,
-                          // mostrando a info de pontos do usuário (score)
                           overlayBuilderMap: {
+                            PlayState.welcome.name: (context, game) =>
+                              const OverlayScreen(
+                                title: 'TOQUE PARA COMEÇAR',
+                                subtitle: '',
+                              ),
+                            PlayState.gameOver.name: (context, game) =>
+                              // TODO: modal com opções as reiniciar ou avançar
+                              const OverlayScreen(
+                                title: 'VOCÊ PERDEU!',
+                                subtitle: 'Tap to Play Again',
+                              ),
+                            PlayState.won.name: (context, game) =>
+                              // TODO:
+                              // - Modal informativo (nível concluído
+                              // - Se estiver no último nível:
+                              // completar ou continuar até o usuário perder?
+                              const OverlayScreen(
+                                title: 'NÍVEL CONCLUÍDO',
+                                subtitle: 'PRÓXIMO NÍVEL INICIANDO',
+                              ),
+
+                            // mostrando a pontuação do usuário (score)
                             'score': (context, Breakout game) {
                               // no topo, à esquerda, com pequeno padding
                               return Positioned(
@@ -56,7 +77,10 @@ class _GameViewState extends State<GameView> {
                                   builder: (context, score, child) {
                                     // texto em si
                                     return Text(
-                                      'Pontos: $score',
+                                      'Pontos: ${
+                                        // pelo menos três 'dígitos'
+                                        score.toString().padLeft(3, '0')
+                                      }',
                                       style: const TextStyle(
                                         fontSize: 20,
                                         color: Colors.black,
@@ -68,10 +92,6 @@ class _GameViewState extends State<GameView> {
                             },
                           },
                           initialActiveOverlays: const ['score'],
-                          // TODO: gerenciar estados diferentes do jogo.
-                          // 1 - Ao receber o usuário ou início de nível
-                          // 2 - Ao usuário "perder" -> reiniciar nível ou passar
-                          // 3 - Passar de nível ou completar níveis
                         ),
                       ),
                     ),
