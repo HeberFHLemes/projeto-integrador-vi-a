@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 class CustomAppBar extends StatelessWidget
     implements PreferredSizeWidget {
 
-  CustomAppBar({super.key, required this.title});
+  const CustomAppBar({super.key, required this.title});
 
   /// Título (texto) apresentado no componente.
-  String title;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
