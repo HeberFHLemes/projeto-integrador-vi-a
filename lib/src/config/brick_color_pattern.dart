@@ -12,10 +12,10 @@ extension BrickColorPatternExtension on BrickColorPattern {
   List<Color> get colors {
     return switch (this) {
       BrickColorPattern.classico => [
-        // mesmas que o padrão de cores do app, mais um tom de vermelho
+        // inspirado nas cores do app, mais um tom de vermelho
         AppTheme.primaryColor,
         AppTheme.secondaryColor,
-        AppTheme.tertiaryColor,
+        Colors.white,
         const Color(0xffd92940),
       ],
       BrickColorPattern.colorido => [
