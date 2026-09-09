@@ -1,3 +1,4 @@
+import 'package:breakout/src/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
 /// Tela com o nome dos integrantes do grupo
@@ -7,18 +8,7 @@ class CreditsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar( // app bar (com nome da tela/página)
-        title: Text(
-            'Créditos',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-            )
-        ),
-        centerTitle: true,
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        automaticallyImplyLeading: false, // sem o ícone padrão
-      ),
+      appBar: CustomAppBar(title: 'Créditos'),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),

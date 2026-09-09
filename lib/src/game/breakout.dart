@@ -22,6 +22,9 @@ class Breakout extends FlameGame
   double get width => size.x;
   double get height => size.y;
 
+  /// Nível atual
+  int currentLevel = 1;
+
   @override
   FutureOr<void> onLoad() async {
     super.onLoad();

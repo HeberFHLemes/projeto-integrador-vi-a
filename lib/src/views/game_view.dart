@@ -1,7 +1,9 @@
-import 'package:breakout/src/game/breakout.dart';
-import 'package:breakout/src/game/constants.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+
+import '../game/breakout.dart';
+import '../game/constants.dart';
+import '../widgets/custom_app_bar.dart';
 
 class GameView extends StatefulWidget {
 
@@ -23,6 +25,7 @@ class _GameViewState extends State<GameView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(title: 'NÍVEL ${game.currentLevel}'),
       body: Container(
         decoration: const BoxDecoration(color: Colors.white),
         child: SafeArea(

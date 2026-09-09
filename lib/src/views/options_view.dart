@@ -1,3 +1,4 @@
+import 'package:breakout/src/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
 /// Tela de configuração da parede de blocos por parte do usuário,
@@ -11,8 +12,8 @@ class OptionsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(title: 'Opções'),
       // TODO:
-      // - AppBar com nome 'Opções'
       // - Título/header em destaque 'Parede de blocos'
       // - Opções de configuração do padrão de cores (DropdownMenu)
       // - Opções de configuração do tamanho dos blocos (SegmentedButton)
