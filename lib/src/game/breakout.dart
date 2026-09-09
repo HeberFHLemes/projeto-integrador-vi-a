@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
@@ -28,6 +29,8 @@ class Breakout extends FlameGame
     ),
   );
 
+  final ValueNotifier<int> score = ValueNotifier(0);
+  final rand = math.Random();
   double get width => size.x;
   double get height => size.y;
 
@@ -65,11 +68,14 @@ class Breakout extends FlameGame
 
     world.removeAll(world.children.query<Brick>());
 
+    score.value = 0;
+
     level = LevelMaker.generateLevel(
-        level: currentLevel,
-        maxWidth: gameWidth,
-        brickSize: brickSize,
-        colorPattern: brickColorPattern
+      level: currentLevel,
+      maxWidth: gameWidth,
+      brickSize: brickSize,
+      colorPattern: brickColorPattern,
+      random: rand
     );
 
     world.addAll(level);

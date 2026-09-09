@@ -44,6 +44,30 @@ class _GameViewState extends State<GameView> {
                         height: gameHeight,
                         child: GameWidget(
                           game: game,
+                          // mostrando a info de pontos do usuário (score)
+                          overlayBuilderMap: {
+                            'score': (context, Breakout game) {
+                              // no topo, à esquerda, com pequeno padding
+                              return Positioned(
+                                top: 16,
+                                left: 16,
+                                child: ValueListenableBuilder<int>(
+                                  valueListenable: game.score,
+                                  builder: (context, score, child) {
+                                    // texto em si
+                                    return Text(
+                                      'Pontos: $score',
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.black,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                          },
+                          initialActiveOverlays: const ['score'],
                           // TODO: gerenciar estados diferentes do jogo.
                           // 1 - Ao receber o usuário ou início de nível
                           // 2 - Ao usuário "perder" -> reiniciar nível ou passar
