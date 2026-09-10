@@ -9,8 +9,7 @@ import 'package:flutter/services.dart';
 
 import '../config/brick_color_pattern.dart';
 import '../config/brick_size.dart';
-import 'components/brick.dart';
-import 'components/play_area.dart';
+import 'components/game_components.dart';
 import 'constants.dart';
 import 'level_maker.dart';
 
@@ -96,9 +95,20 @@ class Breakout extends FlameGame
     if (playState == PlayState.playing) return;
 
     world.removeAll(world.children.query<Brick>());
+    world.removeAll(world.children.query<Paddle>());
 
     playState = PlayState.playing;
     score.value = 0;
+
+    // criação do paddle para o usuário controllar,
+    // com base nas constantes definidas
+    world.add(
+      Paddle(
+        size: Vector2(paddleWidth, paddleHeight),
+        cornerRadius: const Radius.circular(ballRadius / 2),
+        position: Vector2(width / 2, height * 0.95),
+      ),
+    );
 
     level = LevelMaker.generateLevel(
       level: currentLevel,
@@ -125,9 +135,9 @@ class Breakout extends FlameGame
     super.onKeyEvent(event, keysPressed);
     switch (event.logicalKey) {
       case LogicalKeyboardKey.arrowLeft:
-        // TODO: movimento p/ esquerda
+        world.children.query<Paddle>().first.moveBy(-paddleStep);
       case LogicalKeyboardKey.arrowRight:
-        // TODO: movimento p/ direita
+        world.children.query<Paddle>().first.moveBy(paddleStep);
       case LogicalKeyboardKey.space:
       case LogicalKeyboardKey.enter:
         startGame();
