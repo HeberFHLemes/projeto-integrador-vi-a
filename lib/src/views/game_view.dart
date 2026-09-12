@@ -1,6 +1,7 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
+import '../config/game_options.dart';
 import '../game/breakout.dart';
 import '../game/constants.dart';
 import '../widgets/custom_app_bar.dart';
@@ -8,7 +9,12 @@ import '../widgets/overlay_screen.dart';
 
 class GameView extends StatefulWidget {
 
-  const GameView({super.key});
+  const GameView({
+    super.key,
+    this.options = const GameOptions(),
+  });
+
+  final GameOptions options;
 
   @override
   State<GameView> createState() => _GameViewState();
@@ -20,7 +26,7 @@ class _GameViewState extends State<GameView> {
   @override
   void initState() {
     super.initState();
-    game = Breakout();
+    game = Breakout(options: widget.options);
   }
 
   @override

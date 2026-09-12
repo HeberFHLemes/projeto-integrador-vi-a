@@ -17,7 +17,12 @@ final routes = {
     return HomeView();
   },
   '/credits': (context) => CreditsView(),
-  '/game': (context) => GameView(), // TODO: passar as opções
+  '/game': (context) {
+    final options = ModalRoute.of(context)!
+        .settings.arguments as GameOptions;
+
+    return GameView(options: options);
+  },
   '/options': (context) {
     // recebendo e repassando opções selecionadas pelo usuário
     final options = ModalRoute.of(context)!

@@ -7,8 +7,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../config/brick_color_pattern.dart';
-import '../config/brick_size.dart';
+import '../config/game_options.dart';
 import 'components/game_components.dart';
 import 'constants.dart';
 import 'level_maker.dart';
@@ -27,8 +26,7 @@ class Breakout extends FlameGame
   with HasCollisionDetection, KeyboardEvents, TapCallbacks {
 
   Breakout({
-    this.brickSize = BrickSize.medium,
-    this.brickColorPattern = BrickColorPattern.classico,
+    required this.options
   }) : super(
     camera: CameraComponent.withFixedResolution(
       width: gameWidth,
@@ -41,12 +39,9 @@ class Breakout extends FlameGame
   double get width => size.x;
   double get height => size.y;
 
-  /// Tamanho dos blocos selecionado
-  BrickSize brickSize;
-
-  /// Padrão de cores selecionado para a parede de blocos
-  BrickColorPattern brickColorPattern;
-
+  /// Opções do jogo (padrão de cores e tamanho dos blocos)
+  final GameOptions options;
+  
   /// Nível atual
   int currentLevel = 1;
 
@@ -100,6 +95,10 @@ class Breakout extends FlameGame
     playState = PlayState.playing;
     score.value = 0;
 
+    // TODO: adicionar efeito sonoro de ínicio de nível
+
+    // TODO: adicionar componente Ball
+
     // criação do paddle para o usuário controllar,
     // com base nas constantes definidas
     world.add(
@@ -113,8 +112,8 @@ class Breakout extends FlameGame
     level = LevelMaker.generateLevel(
       level: currentLevel,
       maxWidth: gameWidth,
-      brickSize: brickSize,
-      colorPattern: brickColorPattern,
+      brickSize: options.brickSize,
+      colorPattern: options.brickColorPattern,
       random: rand
     );
 
