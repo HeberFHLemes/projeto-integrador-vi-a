@@ -4,10 +4,10 @@ import 'brick_size.dart';
 /// Opções (configurações) do jogo que selecionadas pelo usuário,
 /// sendo o tamanho dos blocos e o padrão de cores da parede de blocos.
 class GameOptions {
-  BrickSize brickSize = BrickSize.medium;
-  BrickColorPattern brickColorPattern = BrickColorPattern.classico;
+  final BrickSize brickSize;
+  final BrickColorPattern brickColorPattern;
 
-  GameOptions({
+  const GameOptions({
     this.brickSize = BrickSize.medium,
     this.brickColorPattern = BrickColorPattern.classico,
   });
