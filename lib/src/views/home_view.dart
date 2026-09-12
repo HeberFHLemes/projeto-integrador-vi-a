@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 
+import '../config/game_options.dart';
 import '../widgets/app_button.dart';
 
+
+/// Tela inicial do App
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
+
+  // TODO:
+  //  refatorar para stateful;
+  //  receber gameoptions de volta da OptionsView;
+  //  receber como parâmetro ou instanciar;
+  final GameOptions _options = const GameOptions();
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +44,11 @@ class HomeView extends StatelessWidget {
                         backgroundColor: Theme.of(context).colorScheme.primary,
                         textColor: Colors.white,
                         onPressed: () {
-                          // TODO: passar configuração da parede de blocos
-                          Navigator.pushNamed(context,'/game');
+                          Navigator.pushNamed(
+                            context,
+                            '/game',
+                            arguments: _options,
+                          );
                         }
                       ),
                       AppButton(
@@ -44,8 +56,15 @@ class HomeView extends StatelessWidget {
                         backgroundColor: Theme.of(context).colorScheme.secondary,
                         textColor: Colors.white,
                         onPressed: () {
-                          // TODO: passar configuração da parede de blocos
-                          Navigator.pushNamed(context, '/options');
+                          final result = Navigator.pushNamed(
+                            context,
+                            '/options',
+                            arguments: _options,
+                          );
+
+                          if (result is GameOptions) {
+                            // TODO: receber as opções selecionadas
+                          }
                         }
                       ),
                       AppButton(

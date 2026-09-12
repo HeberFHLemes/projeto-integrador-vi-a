@@ -3,20 +3,20 @@ import 'package:flutter/material.dart';
 import '../config/brick_color_pattern.dart';
 import '../config/brick_size.dart';
 import '../config/game_options.dart';
+import '../widgets/app_button.dart';
 import '../widgets/brick_size_button.dart';
 import '../widgets/color_pattern_dropdown.dart';
 import '../widgets/custom_app_bar.dart';
 
 /// Tela de configuração da parede de blocos por parte do usuário.
 class OptionsView extends StatefulWidget {
+  
   const OptionsView({
     super.key,
-    // required this.options,
+    required this.options,
   });
 
-  // TODO: receber as opções selecionadas como parâmetro
-  // por enquanto instanciando aqui!
-  final GameOptions options = const GameOptions();
+  final GameOptions options;
 
   @override
   State<StatefulWidget> createState() => _OptionsViewState();
@@ -100,7 +100,26 @@ class _OptionsViewState extends State<OptionsView> {
                 ),
               ),
 
-              // TODO: botão voltar
+              // Botão Voltar, retornando um objeto que representa
+              // as opções selecionadas
+              Expanded(
+                child: Center(
+                  child: AppButton(
+                    text: 'Voltar',
+                    textColor: Theme.of(context).colorScheme.secondary,
+                    backgroundColor: Theme.of(context).colorScheme.tertiary,
+                    onPressed: () {
+                      final options = GameOptions(
+                        brickSize: _selectedSize,
+                        brickColorPattern: _selectedColorPattern,
+                      );
+
+                      // retornando as opções selecionadas
+                      Navigator.pop(context, options);
+                    }
+                  ),
+                ),
+              ),
             ],
           )
         ),
