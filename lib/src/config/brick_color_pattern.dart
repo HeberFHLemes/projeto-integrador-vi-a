@@ -34,4 +34,13 @@ extension BrickColorPatternExtension on BrickColorPattern {
       ],
     };
   }
+
+  /// Texto a ser apresentado ao usuário para representar cada padrão.
+  String get label {
+    return switch (this) {
+      BrickColorPattern.classico => 'Clássico',
+      BrickColorPattern.colorido => 'Colorido',
+      BrickColorPattern.brasil => 'Brasil',
+    };
+  }
 }
