@@ -3,16 +3,29 @@ import 'package:flutter/material.dart';
 import '../config/game_options.dart';
 import '../widgets/app_button.dart';
 
-
 /// Tela inicial do App
-class HomeView extends StatelessWidget {
-  const HomeView({super.key});
+class HomeView extends StatefulWidget {
+  const HomeView({
+    super.key,
+    this.options = const GameOptions(),
+  });
 
-  // TODO:
-  //  refatorar para stateful;
-  //  receber gameoptions de volta da OptionsView;
-  //  receber como parâmetro ou instanciar;
-  final GameOptions _options = const GameOptions();
+  final GameOptions options;
+
+  @override
+  State<StatefulWidget> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  late GameOptions _options;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Obtendo as opções selecionadas
+    _options = widget.options;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,15 +68,18 @@ class HomeView extends StatelessWidget {
                         text: 'Opções',
                         backgroundColor: Theme.of(context).colorScheme.secondary,
                         textColor: Colors.white,
-                        onPressed: () {
-                          final result = Navigator.pushNamed(
+                        onPressed: () async {
+                          final result = await Navigator.pushNamed(
                             context,
                             '/options',
                             arguments: _options,
                           );
 
+                          // Recebe as alterações feitas pelo usuário.
                           if (result is GameOptions) {
-                            // TODO: receber as opções selecionadas
+                            setState(() {
+                              _options = result;
+                            });
                           }
                         }
                       ),
