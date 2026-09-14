@@ -1,6 +1,7 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
+import '../config/brick_color_pattern.dart';
 import '../config/game_options.dart';
 import '../game/breakout.dart';
 import '../game/constants.dart';
@@ -35,7 +36,7 @@ class _GameViewState extends State<GameView> {
       appBar: CustomAppBar(title: 'NÍVEL ${game.currentLevel}'),
       body: Container(
         decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.tertiary,
+          color: Theme.of(context).colorScheme.tertiary,
         ),
         child: SafeArea(
           child: Padding(
@@ -50,53 +51,13 @@ class _GameViewState extends State<GameView> {
                         height: gameHeight,
                         child: GameWidget(
                           game: game,
-                          overlayBuilderMap: {
-                            PlayState.welcome.name: (context, game) =>
-                              const OverlayScreen(
-                                title: 'TOQUE PARA COMEÇAR',
-                                subtitle: '',
-                              ),
-                            PlayState.gameOver.name: (context, game) =>
-                              // TODO: modal com opções as reiniciar ou avançar
-                              const OverlayScreen(
-                                title: 'VOCÊ PERDEU!',
-                                subtitle: 'Tap to Play Again',
-                              ),
-                            PlayState.won.name: (context, game) =>
-                              // TODO:
-                              // - Modal informativo (nível concluído
-                              // - Se estiver no último nível:
-                              // completar ou continuar até o usuário perder?
-                              const OverlayScreen(
-                                title: 'NÍVEL CONCLUÍDO',
-                                subtitle: 'PRÓXIMO NÍVEL INICIANDO',
-                              ),
-
-                            // mostrando a pontuação do usuário (score)
-                            'score': (context, Breakout game) {
-                              // no topo, à esquerda, com pequeno padding
-                              return Positioned(
-                                top: 16,
-                                left: 16,
-                                child: ValueListenableBuilder<int>(
-                                  valueListenable: game.score,
-                                  builder: (context, score, child) {
-                                    // texto em si
-                                    return Text(
-                                      'Pontos: ${
-                                        // pelo menos três 'dígitos'
-                                        score.toString().padLeft(3, '0')
-                                      }',
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.black,
-                                      ),
-                                    );
-                                  },
-                                ),
-                              );
-                            },
-                          },
+                          overlayBuilderMap: _overlays(
+                            // Cor do texto com base na cor de fundo do jogo
+                            textColor:
+                              widget.options.brickColorPattern.isDarkTheme
+                                ? Colors.white
+                                : Theme.of(context).colorScheme.secondary
+                          ),
                           initialActiveOverlays: const ['score'],
                         ),
                       ),
@@ -109,5 +70,59 @@ class _GameViewState extends State<GameView> {
         ),
       )
     );
+  }
+
+  /// Textos, modais e informações sobrepostas à tela de jogo,
+  /// de acordo com os diferentes estados do jogo.
+  Map<String, Widget Function(BuildContext, Breakout)>? _overlays({
+    required Color textColor
+  }) {
+    return {
+      PlayState.welcome.name: (context, Breakout game) =>
+        OverlayScreen(
+          title: 'TOQUE PARA COMEÇAR',
+          subtitle: '',
+          textColor: textColor,
+        ),
+      PlayState.gameOver.name: (context, Breakout game) =>
+        // TODO: modal com opções as reiniciar ou avançar
+        OverlayScreen(
+          title: 'VOCÊ PERDEU!',
+          subtitle: 'Tap to Play Again',
+          textColor: textColor,
+        ),
+      PlayState.won.name: (context, Breakout game) =>
+        // TODO: Modal ao concluir o nível com sucesso
+        OverlayScreen(
+          title: 'NÍVEL CONCLUÍDO',
+          subtitle: 'PRÓXIMO NÍVEL INICIANDO',
+          textColor: textColor,
+        ),
+
+      // mostrando a pontuação do usuário (score)
+      'score': (context, Breakout game) {
+        // no topo, à esquerda, com pequeno padding
+        return Positioned(
+          top: 16,
+          left: 16,
+          child: ValueListenableBuilder<int>(
+            valueListenable: game.score,
+            builder: (context, score, child) {
+              // texto em si
+              return Text(
+                'Pontos: ${
+                // pelo menos três 'dígitos'
+                    score.toString().padLeft(3, '0')
+                }',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: textColor,
+                ),
+              );
+            },
+          ),
+        );
+      },
+    };
   }
 }
