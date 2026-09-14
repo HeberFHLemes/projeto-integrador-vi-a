@@ -9,17 +9,32 @@ class AppTheme {
 
   /// Definição do tema do aplicativo, retornando ThemeData.
   static ThemeData get theme {
+
+    // Fonte "Press Start 2P", do Google Fonts.
+    final textTheme = GoogleFonts.pressStart2pTextTheme().apply(
+      bodyColor: secondaryColor,
+      displayColor: secondaryColor,
+    );
+
+    // paleta de cores do app
+    final colorScheme = ColorScheme.light(
+      primary: primaryColor,
+      secondary: secondaryColor,
+      tertiary: tertiaryColor,
+    );
+
+    // estilo de texto (principalmente tamanho da fonte) padrão para a appbar
+    final appBarTheme = AppBarTheme(
+      titleTextStyle: textTheme.titleLarge?.copyWith(
+        color: Colors.white,
+        fontSize: 18,
+      ),
+    );
+
     return ThemeData(
-      // Fonte "Press Start 2P", do Google Fonts.
-      textTheme: GoogleFonts.pressStart2pTextTheme().apply(
-        bodyColor: secondaryColor,
-        displayColor: secondaryColor,
-      ),
-      colorScheme: ColorScheme.light(
-        primary: primaryColor,
-        secondary: secondaryColor,
-        tertiary: tertiaryColor,
-      ),
+      textTheme: textTheme,
+      colorScheme: colorScheme,
+      appBarTheme: appBarTheme,
     );
   }
 }

@@ -33,7 +33,8 @@ class _GameViewState extends State<GameView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'NÍVEL ${game.currentLevel}'),
+      // TODO: appbar atualizar o nível atual
+      appBar: CustomAppBar(title: Text('Nível 1')),
       body: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.tertiary,

@@ -39,7 +39,7 @@ class _OptionsViewState extends State<OptionsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Opções'),
+      appBar: const CustomAppBar(title: Text('Opções')),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsetsGeometry.all(20),

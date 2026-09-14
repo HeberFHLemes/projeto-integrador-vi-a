@@ -21,7 +21,7 @@ class CreditsView extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      appBar: CustomAppBar(title: 'Créditos'),
+      appBar: const CustomAppBar(title: Text('Créditos')),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
