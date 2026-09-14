@@ -45,6 +45,9 @@ class Breakout extends FlameGame
   /// Nível atual
   final ValueNotifier<int> currentLevel = ValueNotifier(1);
 
+  /// Para redefinir pontuação se usuário quiser reiniciar o nível
+  int scoreAtLevelStart = 0;
+
   /// Opções do jogo (padrão de cores e tamanho dos blocos)
   final GameOptions options;
 
@@ -58,15 +61,19 @@ class Breakout extends FlameGame
 
   set playState(PlayState playState) {
     _playState = playState;
+
+    // removendo os overlays dos estados
+    overlays.remove(PlayState.welcome.name);
+    overlays.remove(PlayState.gameOver.name);
+    overlays.remove(PlayState.won.name);
+
     switch (playState) {
       case PlayState.welcome:
       case PlayState.gameOver:
       case PlayState.won:
         overlays.add(playState.name);
       case PlayState.playing:
-        overlays.remove(PlayState.welcome.name);
-        overlays.remove(PlayState.gameOver.name);
-        overlays.remove(PlayState.won.name);
+      // jogo executando...
     }
   }
 
@@ -81,16 +88,60 @@ class Breakout extends FlameGame
     playState = PlayState.welcome;
   }
 
+  /// Inicia um novo jogo (nível 1)
   void startGame() {
+    currentLevel.value = 1;
+    score.value = 0;
+
+    generateNewLevel();
+
+    startLevel();
+  }
+
+  /// Gera nova parede de blocos com base no nível atual,
+  /// tamanho de tela, e configurações feitas pelo usuário.
+  void generateNewLevel() {
+    level = LevelMaker.generateLevel(
+        level: currentLevel.value,
+        maxWidth: gameWidth,
+        brickSize: options.brickSize,
+        colorPattern: options.brickColorPattern,
+        random: rand
+    );
+  }
+
+  /// Para ser utilizado na opção avançar nível (no modal)
+  void nextLevel() {
+    // TODO: Ao completar nível 5, voltar ao menu ou deixar prosseguir?
+    currentLevel.value++;
+
+    generateNewLevel();
+
+    startLevel();
+  }
+
+  /// Para ser utilizado na opção reiniciar nível (no modal)
+  void restartLevel() {
+    // redefine a pontuação para quando o usuário iniciou o nível
+    score.value = scoreAtLevelStart;
+
+    startLevel();
+  }
+
+  /// Inicia o nível atual, adicionando componentes de jogo na tela.
+  void startLevel() {
     if (playState == PlayState.playing) return;
 
+    world.removeAll(world.children.query<Ball>());
     world.removeAll(world.children.query<Brick>());
     world.removeAll(world.children.query<Paddle>());
 
     playState = PlayState.playing;
-    score.value = 0;
-    // TODO: adicionar efeito sonoro de ínicio de nível
+    scoreAtLevelStart = score.value;
 
+    // TODO: reproduzir som de início da fase
+
+    // criação da bola
     world.add(
       Ball(
         position: size / 2, // começa no meio da tela
@@ -113,28 +164,35 @@ class Breakout extends FlameGame
       ),
     );
 
-    level = LevelMaker.generateLevel(
-      level: currentLevel.value,
-      maxWidth: gameWidth,
-      brickSize: options.brickSize,
-      colorPattern: options.brickColorPattern,
-      random: rand
-    );
-
     world.addAll(level);
+  }
+
+  /// Responsável por definir as ações para cada estado
+  void handleState() {
+    switch (playState) {
+      case PlayState.welcome:
+        startGame();
+
+      case PlayState.won:
+        nextLevel();
+
+      case PlayState.playing:
+      case PlayState.gameOver: // modal ficará como responsável
+        break;
+    }
   }
 
   @override
   void onTapDown(TapDownEvent event) {
     super.onTapDown(event);
-    startGame();
+    handleState();
   }
 
   @override
   KeyEventResult onKeyEvent(
-      KeyEvent event,
-      Set<LogicalKeyboardKey> keysPressed,
-      ) {
+    KeyEvent event,
+    Set<LogicalKeyboardKey> keysPressed,
+  ) {
     super.onKeyEvent(event, keysPressed);
     switch (event.logicalKey) {
       case LogicalKeyboardKey.arrowLeft:
@@ -143,11 +201,12 @@ class Breakout extends FlameGame
         world.children.query<Paddle>().first.moveBy(paddleStep);
       case LogicalKeyboardKey.space:
       case LogicalKeyboardKey.enter:
-        startGame();
+        handleState();
     }
     return KeyEventResult.handled;
   }
 
+  /// Cor de fundo do jogo, com base no padrão de cores selecionado.
   @override
   Color backgroundColor() {
     return options.brickColorPattern.isDarkTheme
