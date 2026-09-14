@@ -34,7 +34,13 @@ class _GameViewState extends State<GameView> {
   Widget build(BuildContext context) {
     return Scaffold(
       // TODO: appbar atualizar o nível atual
-      appBar: CustomAppBar(title: Text('Nível 1')),
+      appBar: CustomAppBar(
+        // para poder atualizar o valor
+        title: ValueListenableBuilder<int>(
+          valueListenable: game.currentLevel,
+          builder: (_, level, _) => Text('NÍVEL $level'),
+        ),
+      ),
       body: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.tertiary,

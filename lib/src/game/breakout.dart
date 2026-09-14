@@ -35,16 +35,18 @@ class Breakout extends FlameGame
     ),
   );
 
-  final ValueNotifier<int> score = ValueNotifier(0);
-  final rand = math.Random();
   double get width => size.x;
   double get height => size.y;
+  final rand = math.Random();
+
+  /// Pontuação atual do usuário
+  final ValueNotifier<int> score = ValueNotifier(0);
+
+  /// Nível atual
+  final ValueNotifier<int> currentLevel = ValueNotifier(1);
 
   /// Opções do jogo (padrão de cores e tamanho dos blocos)
   final GameOptions options;
-  
-  /// Nível atual
-  int currentLevel = 1;
 
   /// Parede de blocos que representa o nível atual
   late List<Brick> level;
@@ -87,7 +89,6 @@ class Breakout extends FlameGame
 
     playState = PlayState.playing;
     score.value = 0;
-
     // TODO: adicionar efeito sonoro de ínicio de nível
 
     world.add(
@@ -113,7 +114,7 @@ class Breakout extends FlameGame
     );
 
     level = LevelMaker.generateLevel(
-      level: currentLevel,
+      level: currentLevel.value,
       maxWidth: gameWidth,
       brickSize: options.brickSize,
       colorPattern: options.brickColorPattern,
