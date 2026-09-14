@@ -80,7 +80,28 @@ class Ball extends CircleComponent
         other.size.x * game.width * 0.3;
 
     } else if (other is Brick) { // se acertar um bloco
-      // TODO: colisão com blocos
+
+      // diferença entre os centros nos eixos x e y dos dois componentes
+      final offsetX = other.center.x - center.x;
+      final offsetY = other.center.y - center.y;
+
+      // profundidade da colisão nos eixos x e y (se a bola se sobrepôs ao bloco)
+      final px = (other.width / 2) + radius - offsetX.abs();
+      final py = (other.height / 2) + radius - offsetY.abs();
+
+      // reflete a bola no eixo de menor "sobreposição" e 
+      // então corrige a posição dela
+      if (px < py) {
+        velocity.x = -velocity.x;
+        position.x = position.x + (offsetX > 0 ? -px : px);
+      
+      } else {
+        velocity.y = -velocity.y;
+        position.y = position.y + (offsetY > 0 ? -py : py);
+      }
+      
+      // por fim se aumenta a velocidade
+      velocity.setFrom(velocity * difficultyModifier);
     }
   }
 }

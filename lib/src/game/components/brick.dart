@@ -2,8 +2,10 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
-import '../../app/app_theme.dart';
+import 'ball.dart';
+import 'paddle.dart';
 import '../breakout.dart';
+import '../../app/app_theme.dart';
 
 /// Componente que representa os blocos
 class Brick extends RectangleComponent
@@ -30,7 +32,18 @@ class Brick extends RectangleComponent
   ) {
     super.onCollisionStart(intersectionPoints, other);
 
-    // TODO: lidar com as colisões
+    // remove bloco da tela
+    removeFromParent();
+
+    // aumenta a pontuação do usuário
+    game.score.value++;
+
+    // Se for o último bloco, usuário "venceu" o nível
+    if (game.world.children.query<Brick>().length == 1) {
+      game.playState = PlayState.won;
+      game.world.removeAll(game.world.children.query<Ball>());
+      game.world.removeAll(game.world.children.query<Paddle>());
+    }
   }
 
   // Borda dos blocos
