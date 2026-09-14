@@ -2,12 +2,16 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flutter/material.dart';
 
 import '../breakout.dart';
 
 /// Componente relativo à "área de jogo", contendo os "limites" da tela de jogo.
 class PlayArea extends RectangleComponent with HasGameReference<Breakout> {
-  PlayArea() : super(children: [RectangleHitbox()]);
+  PlayArea() : super(
+    paint: Paint()..color = Colors.transparent,
+    children: [RectangleHitbox()],
+  );
 
   @override
   FutureOr<void> onLoad() async {

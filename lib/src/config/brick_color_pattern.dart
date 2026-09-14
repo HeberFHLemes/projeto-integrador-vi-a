@@ -4,7 +4,11 @@ import '../app/app_theme.dart';
 
 /// Padrões de cores para a parede de blocos
 enum BrickColorPattern {
-  classico, colorido, brasil
+  classico,
+  classicoEscuro,
+  colorido,
+  coloridoEscuro,
+  brasil,
 }
 
 /// Padrões de cores para os blocos
@@ -18,7 +22,21 @@ extension BrickColorPatternExtension on BrickColorPattern {
         Colors.white,
         const Color(0xffd92940),
       ],
+      BrickColorPattern.classicoEscuro => [
+        AppTheme.primaryColor,
+        AppTheme.secondaryColor,
+        Colors.white,
+        const Color(0xffd92940),
+      ],
       BrickColorPattern.colorido => [
+        const Color(0xfff94144),
+        const Color(0xfff9844a),
+        const Color(0xfff8961e),
+        const Color(0xfff9c74f),
+        const Color(0xff4d908e),
+        const Color(0xff577590),
+      ],
+      BrickColorPattern.coloridoEscuro => [
         const Color(0xfff94144),
         const Color(0xfff9844a),
         const Color(0xfff8961e),
@@ -39,8 +57,18 @@ extension BrickColorPatternExtension on BrickColorPattern {
   String get label {
     return switch (this) {
       BrickColorPattern.classico => 'Clássico',
+      BrickColorPattern.classicoEscuro => 'Clássico Escuro',
       BrickColorPattern.colorido => 'Colorido',
+      BrickColorPattern.coloridoEscuro => 'Colorido Escuro',
       BrickColorPattern.brasil => 'Brasil',
+    };
+  }
+
+  bool get isDarkTheme {
+    return switch (this) {
+      BrickColorPattern.classicoEscuro => true,
+      BrickColorPattern.coloridoEscuro => true,
+      _ => false,
     };
   }
 }

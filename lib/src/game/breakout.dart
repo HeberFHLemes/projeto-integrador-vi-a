@@ -7,6 +7,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../config/brick_color_pattern.dart';
 import '../config/game_options.dart';
 import 'components/game_components.dart';
 import 'constants.dart';
@@ -144,5 +145,12 @@ class Breakout extends FlameGame
         startGame();
     }
     return KeyEventResult.handled;
+  }
+
+  @override
+  Color backgroundColor() {
+    return options.brickColorPattern.isDarkTheme
+      ? Colors.black
+      : Colors.white;
   }
 }

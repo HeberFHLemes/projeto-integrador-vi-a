@@ -6,6 +6,7 @@ import 'ball.dart';
 import 'paddle.dart';
 import '../breakout.dart';
 import '../../app/app_theme.dart';
+import '../../config/brick_color_pattern.dart';
 
 /// Componente que representa os blocos
 class Brick extends RectangleComponent
@@ -48,13 +49,17 @@ class Brick extends RectangleComponent
 
   // Borda dos blocos
   final Paint _borderPaint = Paint()
-    ..color = AppTheme.secondaryColor
     ..style = PaintingStyle.stroke
     ..strokeWidth = 2.4;
 
   @override
   void render(Canvas canvas) {
     super.render(canvas);
+
+    // cor da borda com base na cor de fundo do jogo
+    _borderPaint.color = game.options.brickColorPattern.isDarkTheme
+      ? Colors.white
+      : AppTheme.secondaryColor;
 
     // Adicionando borda aos blocos para poder utilizar cores claras.
     canvas.drawRect(size.toRect(), _borderPaint);
