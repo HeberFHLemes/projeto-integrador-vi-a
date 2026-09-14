@@ -56,7 +56,6 @@ class Breakout extends FlameGame
   set playState(PlayState playState) {
     _playState = playState;
     switch (playState) {
-      // TODO: gerenciar estados de welcome, gameOver e won apropriadamente...
       case PlayState.welcome:
       case PlayState.gameOver:
       case PlayState.won:
@@ -79,13 +78,6 @@ class Breakout extends FlameGame
     playState = PlayState.welcome;
   }
 
-  // TODO:
-  // - Gerenciar os estados
-  // - Adicionar/remover objetos do "mundo"/world
-  // - Eventos de interação do usuário
-  // - Usar efeitos sonoros em certas ações
-  // - Gerenciar os níveis
-
   void startGame() {
     if (playState == PlayState.playing) return;
 
@@ -97,7 +89,17 @@ class Breakout extends FlameGame
 
     // TODO: adicionar efeito sonoro de ínicio de nível
 
-    // TODO: adicionar componente Ball
+    world.add(
+      Ball(
+        position: size / 2, // começa no meio da tela
+        radius: ballRadius,
+        difficultyModifier: difficultyModifier,
+        velocity: Vector2(
+          (rand.nextDouble() - 0.5) * width,
+          height * 0.2,
+        ).normalized()..scale(height / 4),
+      )
+    );
 
     // criação do paddle para o usuário controllar,
     // com base nas constantes definidas
