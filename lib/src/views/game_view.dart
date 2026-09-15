@@ -6,7 +6,7 @@ import '../config/game_options.dart';
 import '../game/breakout.dart';
 import '../game/constants.dart';
 import '../widgets/custom_app_bar.dart';
-import '../widgets/overlay_screen.dart';
+import '../widgets/overlays/overlays.dart';
 
 class GameView extends StatefulWidget {
 
@@ -41,21 +41,25 @@ class _GameViewState extends State<GameView> {
           builder: (_, level, _) => Text('NÍVEL $level'),
         ),
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.tertiary,
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 16),
-            child: Center(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: FittedBox(
-                      child: SizedBox(
-                        width: gameWidth,
-                        height: gameHeight,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 16),
+          child: Center(
+            child: Column(
+              children: [
+                Expanded(
+                  child: FittedBox(
+                    child: SizedBox(
+                      width: gameWidth,
+                      height: gameHeight,
+                      child: Container(
+                        // pequena borda para identificar paredes do jogo
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Theme.of(context).colorScheme.secondary,
+                            width: 1,
+                          ),
+                        ),
                         child: GameWidget(
                           game: game,
                           overlayBuilderMap: _overlays(
@@ -70,8 +74,8 @@ class _GameViewState extends State<GameView> {
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
@@ -85,26 +89,23 @@ class _GameViewState extends State<GameView> {
     required Color textColor
   }) {
     return {
+      // Antes de começar de fato o jogo
       PlayState.welcome.name: (context, Breakout game) =>
         OverlayScreen(
           title: 'TOQUE PARA COMEÇAR',
           subtitle: '',
           textColor: textColor,
         ),
+
+      // Modal apresentado quando o usuário "perde" um nível,
+      // mostrando as opções de reiniciar nível ou avançar pro próximo.
       PlayState.gameOver.name: (context, Breakout game) =>
-        // TODO: modal com opções as reiniciar ou avançar
-        OverlayScreen(
-          title: 'VOCÊ PERDEU!',
-          subtitle: 'Tap to Play Again',
-          textColor: textColor,
-        ),
-      PlayState.won.name: (context, Breakout game) =>
-        // TODO: Modal ao concluir o nível com sucesso
-        OverlayScreen(
-          title: 'NÍVEL CONCLUÍDO',
-          subtitle: 'PRÓXIMO NÍVEL INICIANDO',
-          textColor: textColor,
-        ),
+        GameOverOverlay(game: game),
+
+      // Modal de nível concluído
+      PlayState.won.name: (context, Breakout game) {
+        return LevelWonOverlay(game: game);
+      },
 
       // mostrando a pontuação do usuário (score)
       'score': (context, Breakout game) {
@@ -119,7 +120,7 @@ class _GameViewState extends State<GameView> {
               return Text(
                 'Pontos: ${
                 // pelo menos três 'dígitos'
-                    score.toString().padLeft(3, '0')
+                  score.toString().padLeft(3, '0')
                 }',
                 style: TextStyle(
                   fontSize: 20,
