@@ -15,10 +15,10 @@ import 'level_maker.dart';
 
 /// Estados do jogo
 enum PlayState {
-  welcome, // antes de "iniciar" o jogo
+  welcome, // antes de "iniciar" o nível
   playing, // enquanto joga
-  gameOver, // modal "Você perdeu!" com as opções de reiniciar nível ou avançar
-  won; // modal informando que usuário avançará p/ o próximo nível
+  gameOver, // usuário "perdeu" (opções de reiniciar nível ou avançar)
+  won; // usuário completou o nível
 }
 
 /// Classe responsável pelo gerenciamento do jogo e seus componentes,
@@ -85,17 +85,18 @@ class Breakout extends FlameGame
 
     world.add(PlayArea());
 
+    // (re)define variáveis e já chama a construção da parede
+    setupGame();
+
     playState = PlayState.welcome;
   }
 
-  /// Inicia um novo jogo (nível 1)
-  void startGame() {
+  /// Prepara um novo jogo (nível 1)
+  void setupGame() {
     currentLevel.value = 1;
     score.value = 0;
 
     generateNewLevel();
-
-    startLevel();
   }
 
   /// Gera nova parede de blocos com base no nível atual,
@@ -112,12 +113,11 @@ class Breakout extends FlameGame
 
   /// Para ser utilizado na opção avançar nível (no modal)
   void nextLevel() {
-    // TODO: Ao completar nível 5, voltar ao menu ou deixar prosseguir?
     currentLevel.value++;
 
     generateNewLevel();
 
-    startLevel();
+    playState = PlayState.welcome;
   }
 
   /// Para ser utilizado na opção reiniciar nível (no modal)
@@ -125,16 +125,14 @@ class Breakout extends FlameGame
     // redefine a pontuação para quando o usuário iniciou o nível
     score.value = scoreAtLevelStart;
 
-    startLevel();
+    playState = PlayState.welcome;
   }
 
   /// Inicia o nível atual, adicionando componentes de jogo na tela.
   void startLevel() {
     if (playState == PlayState.playing) return;
 
-    world.removeAll(world.children.query<Ball>());
-    world.removeAll(world.children.query<Brick>());
-    world.removeAll(world.children.query<Paddle>());
+    clearLevel();
 
     playState = PlayState.playing;
     scoreAtLevelStart = score.value;
@@ -167,18 +165,31 @@ class Breakout extends FlameGame
     world.addAll(level);
   }
 
+  /// Quando o usuário concluir o nível, avançando para o próximo.
+  Future<void> completeLevel() async {
+    if (playState != PlayState.playing) return;
+
+    clearLevel();
+
+    playState = PlayState.won;
+
+    // modal fica apenas por um tempo na tela
+    await Future.delayed(const Duration(seconds: 2));
+
+    nextLevel();
+  }
+
+  /// Remove os componentes de jogo da tela
+  void clearLevel() {
+    world.removeAll(world.children.query<Ball>());
+    world.removeAll(world.children.query<Brick>());
+    world.removeAll(world.children.query<Paddle>());
+  }
+
   /// Responsável por definir as ações para cada estado
   void handleState() {
-    switch (playState) {
-      case PlayState.welcome:
-        startGame();
-
-      case PlayState.won:
-        nextLevel();
-
-      case PlayState.playing:
-      case PlayState.gameOver: // modal ficará como responsável
-        break;
+    if (playState == PlayState.welcome) {
+      startLevel();
     }
   }
 

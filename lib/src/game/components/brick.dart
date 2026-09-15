@@ -2,8 +2,6 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
-import 'ball.dart';
-import 'paddle.dart';
 import '../breakout.dart';
 import '../../app/app_theme.dart';
 import '../../config/brick_color_pattern.dart';
@@ -33,6 +31,8 @@ class Brick extends RectangleComponent
   ) {
     super.onCollisionStart(intersectionPoints, other);
 
+    final isLastBrick = game.world.children.query<Brick>().length == 1;
+
     // remove bloco da tela
     removeFromParent();
 
@@ -40,10 +40,8 @@ class Brick extends RectangleComponent
     game.score.value++;
 
     // Se for o último bloco, usuário "venceu" o nível
-    if (game.world.children.query<Brick>().length == 1) {
-      game.playState = PlayState.won;
-      game.world.removeAll(game.world.children.query<Ball>());
-      game.world.removeAll(game.world.children.query<Paddle>());
+    if (isLastBrick) {
+      game.completeLevel();
     }
   }
 
