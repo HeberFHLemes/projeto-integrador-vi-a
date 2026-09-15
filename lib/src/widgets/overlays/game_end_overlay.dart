@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 
-import '../../game/breakout.dart';
-
-/// Overlay para quando o usuário deixar a bola passar do paddle ("perder"),
-/// com as opções de reiniciar o mesmo nível ou avançar de nível.
-class GameOverOverlay extends StatelessWidget {
-  const GameOverOverlay({
+/// Componente que representará o modal de fim de jogo,
+/// seja ao perder ou atingir o final do último nível.
+class GameEndOverlay extends StatelessWidget {
+  const GameEndOverlay({
     super.key,
-    required this.game,
+    required this.title,
+    required this.subtitle,
+    required this.actions,
   });
 
-  final Breakout game;
+  final String title;
+  final String subtitle;
+
+  final List<GameEndButton> actions;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +48,7 @@ class GameOverOverlay extends StatelessWidget {
               children: [
                 // Texto em destaque
                 Text(
-                  'VOCÊ PERDEU!',
+                  title,
                   style: textTheme.headlineLarge?.copyWith(
                     color: colorScheme.primary,
                   ),
@@ -55,7 +58,7 @@ class GameOverOverlay extends StatelessWidget {
 
                 // texto menor
                 Text(
-                  'O QUE DESEJA FAZER?',
+                  subtitle,
                   style: textTheme.headlineSmall,
                 ),
 
@@ -65,25 +68,8 @@ class GameOverOverlay extends StatelessWidget {
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // reiniciar mesmo nível
-                      _GameOverButton(
-                        label: 'JOGAR DE NOVO',
-                        backgroundColor: colorScheme.primary,
-                        foregroundColor: Colors.white,
-                        onPressed: game.restartLevel,
-                      ),
-
-                      const SizedBox(height: 16),
-
-                      // avançar para o próximo
-                      _GameOverButton(
-                        label: 'PRÓXIMO NÍVEL',
-                        backgroundColor: colorScheme.tertiary,
-                        foregroundColor: colorScheme.primary,
-                        onPressed: game.nextLevel,
-                      ),
-                    ],
+                    spacing: 16,
+                    children: actions,
                   ),
                 ),
               ],
@@ -95,9 +81,10 @@ class GameOverOverlay extends StatelessWidget {
   }
 }
 
-/// Botões utilizados no modal
-class _GameOverButton extends StatelessWidget {
-  const _GameOverButton({
+/// Botões utilizados no modal de fim de jogo/nível
+class GameEndButton extends StatelessWidget {
+  const GameEndButton({
+    super.key,
     required this.label,
     required this.backgroundColor,
     required this.foregroundColor,

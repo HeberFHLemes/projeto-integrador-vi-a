@@ -8,6 +8,7 @@ import '../game/constants.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/overlays/overlays.dart';
 
+/// Tela de jogo
 class GameView extends StatefulWidget {
 
   const GameView({
@@ -33,7 +34,6 @@ class _GameViewState extends State<GameView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // TODO: appbar atualizar o nível atual
       appBar: CustomAppBar(
         // para poder atualizar o valor
         title: ValueListenableBuilder<int>(
@@ -57,7 +57,7 @@ class _GameViewState extends State<GameView> {
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: Theme.of(context).colorScheme.secondary,
-                            width: 1,
+                            width: 2,
                           ),
                         ),
                         child: GameWidget(
@@ -99,12 +99,14 @@ class _GameViewState extends State<GameView> {
 
       // Modal apresentado quando o usuário "perde" um nível,
       // mostrando as opções de reiniciar nível ou avançar pro próximo.
-      PlayState.gameOver.name: (context, Breakout game) =>
-        GameOverOverlay(game: game),
+      PlayState.gameOver.name: (context, game) =>
+          _buildGameEndOverlay(context, game),
 
       // Modal de nível concluído
       PlayState.won.name: (context, Breakout game) {
-        return LevelWonOverlay(game: game);
+        return game.isLastLevel
+          ? _buildGameEndOverlay(context, game)
+          : LevelWonOverlay(game: game);
       },
 
       // mostrando a pontuação do usuário (score)
@@ -132,5 +134,52 @@ class _GameViewState extends State<GameView> {
         );
       },
     };
+  }
+
+  /// Criação do overlay/modal de fim de jogo, tanto ao perder o nível
+  /// quanto ao chegar ao final do último nível.
+  Widget _buildGameEndOverlay(BuildContext context, Breakout game) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    final String title = game.isLastLevel
+        ? 'FIM DE JOGO!'
+        : 'VOCÊ PERDEU!';
+
+    final String subtitle = game.isLastLevel
+        ? 'SUA PONTUAÇÃO: ${game.score.value}'
+        : 'O QUE DESEJA FAZER?';
+
+    // com base em ser ou não o último nível, criar o "segundo" botão,
+    // permitindo avançar para o próximo nível ou voltar para o menu.
+    final GameEndButton secondButton = game.isLastLevel
+        ? GameEndButton(
+      label: 'VOLTAR AO MENU',
+      backgroundColor: colorScheme.secondary,
+      foregroundColor: Colors.white,
+      onPressed: () => Navigator.pop(context),
+    )
+        : GameEndButton( // avançar para o próximo
+      label: 'PRÓXIMO NÍVEL',
+      backgroundColor: colorScheme.tertiary,
+      foregroundColor: colorScheme.primary,
+      onPressed: game.nextLevel,
+    );
+
+    return GameEndOverlay(
+      title: title,
+      subtitle: subtitle,
+      actions: [
+        // reiniciar mesmo nível
+        GameEndButton(
+          label: 'JOGAR DE NOVO',
+          backgroundColor: colorScheme.primary,
+          foregroundColor: Colors.white,
+          onPressed: game.restartLevel,
+        ),
+
+        // definido com base em ser ou não o último nível
+        secondButton,
+      ],
+    );
   }
 }
