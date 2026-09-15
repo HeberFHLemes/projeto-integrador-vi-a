@@ -1,6 +1,7 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/widgets.dart';
 
 import 'paddle.dart';
@@ -70,7 +71,8 @@ class Ball extends CircleComponent
       }
     } else if (other is Paddle) { // se for rebatida pelo paddle
 
-      // TODO: reproduzir som de colisão com o Paddle
+      // som de rebatida no paddle
+      FlameAudio.play('paddle_hit.wav');
 
       // inverte a direção vertical
       velocity.y = -velocity.y;

@@ -4,6 +4,7 @@ import 'dart:math' as math;
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -67,15 +68,18 @@ class Breakout extends FlameGame
     overlays.remove(PlayState.gameOver.name);
     overlays.remove(PlayState.won.name);
 
-    switch (playState) {
-      case PlayState.welcome:
-      case PlayState.gameOver:
-      case PlayState.won:
-        overlays.add(playState.name);
-      case PlayState.playing:
-      // jogo executando...
+    if (playState != PlayState.playing) {
+
+      if (playState == PlayState.welcome) {
+        // som ao "entrar" em um nível
+        FlameAudio.play('start.wav');
+      }
+
+      overlays.add(playState.name);
     }
   }
+
+  bool get isLastLevel => currentLevel.value == 5;
 
   @override
   FutureOr<void> onLoad() async {
@@ -136,8 +140,6 @@ class Breakout extends FlameGame
 
     playState = PlayState.playing;
     scoreAtLevelStart = score.value;
-
-    // TODO: reproduzir som de início da fase
 
     // criação da bola
     world.add(
