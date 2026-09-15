@@ -15,34 +15,19 @@ enum BrickColorPattern {
 extension BrickColorPatternExtension on BrickColorPattern {
   List<Color> get colors {
     return switch (this) {
-      BrickColorPattern.classico => [
+      BrickColorPattern.classico || BrickColorPattern.classicoEscuro => [
         // inspirado nas cores do app, mais um tom de vermelho
         AppTheme.primaryColor,
         AppTheme.secondaryColor,
         Colors.white,
         const Color(0xffd92940),
       ],
-      BrickColorPattern.classicoEscuro => [
-        AppTheme.primaryColor,
-        AppTheme.secondaryColor,
-        Colors.white,
-        const Color(0xffd92940),
-      ],
-      BrickColorPattern.colorido => [
-        const Color(0xfff94144),
-        const Color(0xfff9844a),
-        const Color(0xfff8961e),
-        const Color(0xfff9c74f),
-        const Color(0xff4d908e),
-        const Color(0xff577590),
-      ],
-      BrickColorPattern.coloridoEscuro => [
-        const Color(0xfff94144),
-        const Color(0xfff9844a),
-        const Color(0xfff8961e),
-        const Color(0xfff9c74f),
-        const Color(0xff4d908e),
-        const Color(0xff577590),
+      BrickColorPattern.colorido || BrickColorPattern.coloridoEscuro => [
+        const Color(0xff147AF2),
+        const Color(0xff27AE60),
+        const Color(0xffFF4FA3),
+        const Color(0xffE63946),
+        const Color(0xffF2C94C),
       ],
       BrickColorPattern.brasil => [
         const Color(0xff009C3B),
