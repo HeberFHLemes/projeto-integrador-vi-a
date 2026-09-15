@@ -19,19 +19,21 @@ Utilizaremos um valor base para a largura dos blocos (`brickWidth`), e para o es
 
 ### Largura dos blocos
 Definiremos a largura dos blocos como o resultado da multiplicação de um valor base para as larguras por um valor que representa uma porcentagem.
-```dart
-static double _brickFactors(BrickSize brickSize) {
-  return switch (brickSize) {
-    BrickSize.small => 0.85, // 85%
-    BrickSize.medium => 1.0, // 100%
-    BrickSize.large => 1.25 // 125%
-  };
-}
-```
 
 ```dart
-final factor = _brickFactors(brickSize);
-brickWidth = baseBrickWidth * factor;
+// Utilizamos uma extension no enum para isso.
+extension BrickSizeExtension on BrickSize {
+  double get width {
+    switch (this) {
+      case BrickSize.small:
+        return baseBrickWidth * 0.85; // 85%
+      case BrickSize.medium:
+        return baseBrickWidth; // 100%
+      case BrickSize.large:
+        return baseBrickWidth * 1.25; // 125%
+    }
+  }
+}
 ```
 
 ### Altura dos blocos
