@@ -8,4 +8,6 @@ Desenvolvimento de um aplicativo para dispositivos móveis, consistindo no jogo 
 
 ## Arquivo APK
 O arquivo APK gerado será encontrado na seção **Releases** deste repositório,
-na versão **0.2.0**.
+na versão **0.2.0**, com o nome `breakout-v0.2.0.apk`: 
+
+[Release com o APK](../../releases/tag/v0.2.0).
